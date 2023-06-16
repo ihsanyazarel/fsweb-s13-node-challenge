@@ -20,7 +20,12 @@ router.get("/:id" ,idValidation, async (req, res, next)=>{
 })
 router.post("/",nameAndDescriptionVld, async (req, res, next)=>{
     try {
-        const newProject = await projectsModel.insert(req.body);
+        const payload = {
+            name: req.body.name,
+            description: req.body.description,
+            completed: req.body.completed
+        }
+        const newProject = await projectsModel.insert(payload);
         res.json(newProject);
     } catch (error) {
         next(error);
@@ -28,7 +33,12 @@ router.post("/",nameAndDescriptionVld, async (req, res, next)=>{
 })
 router.put("/:id",nameAndDescriptionVld,idValidation, async (req, res, next)=>{
     try {
-        const updatedProject = await projectsModel.update(req.params.id, req.body);
+        const payload = {
+            name: req.body.name,
+            description: req.body.description,
+            completed: req.body.completed
+        }
+        const updatedProject = await projectsModel.update(req.params.id, payload);
         res.json(updatedProject);
     } catch (error) {
         next(error);

@@ -20,7 +20,13 @@ router.get("/:id" ,actIdValidation, async (req, res, next)=>{
 })
 router.post("/",payloadValidation,existProjectVld, async (req, res, next)=>{
     try {
-        const newAction = await actionsModel.insert(req.body);
+        const payload = {
+            project_id: req.body.project_id,
+            description: req.body.description,
+            notes: req.body.notes,
+            completed: req.body.completed
+        }
+        const newAction = await actionsModel.insert(payload);
         res.status(201).json(newAction);
     } catch (error) {
         next(error);
@@ -28,7 +34,13 @@ router.post("/",payloadValidation,existProjectVld, async (req, res, next)=>{
 })
 router.put("/:id",actIdValidation,payloadValidation,existProjectVld, async (req, res, next)=>{
     try {
-        const updatedAction = await actionsModel.update(req.params.id, req.body);
+        const payload = {
+            project_id: req.body.project_id,
+            description: req.body.description,
+            notes: req.body.notes,
+            completed: req.body.completed
+        }
+        const updatedAction = await actionsModel.update(req.params.id, payload);
         res.json(updatedAction);
     } catch (error) {
         next(error);
